@@ -6,13 +6,14 @@
 #assert 'To-Do' in browser.title
 #browser.quit()
 
-from django.test import LiveServerTestCase
+#from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 import unittest
 import time
 from selenium.webdriver.common.keys import Keys
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
 
