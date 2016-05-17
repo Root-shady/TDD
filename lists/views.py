@@ -8,7 +8,7 @@ def home_page(request):
         text = request.POST.get('item_text', '')
         list_ = List.objects.create()
         Item.objects.create(text=text, list=list_)
-        return redirect('/lists/the-only-list-in-the-world/')
+        return redirect('/lists/%d/' % (list_.id, ))
     return render(request, 'home.html')
 
 def view_list(request, list_id):

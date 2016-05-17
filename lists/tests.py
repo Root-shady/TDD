@@ -40,15 +40,14 @@ class HomePageTest(TestCase):
     #    #self.assertEqual(response.content.decode(), expected_html)
 
     def test_home_page_redirects_after_POST(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = 'A new list item'
-
-        response = home_page(request)
-
-        self.assertEqual(response.status_code, 302)
+        response = self.client.post(
+                '/',
+                data = {'item_text': 'A new list item'}
+            )
+        #self.assertEqual(response.status_code, 302)
         # No using the request.client therefore, there are not absolute url here
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+        list_ = List.objects.first()
+        self.assertRedirects(response, '/lists/%d/' % (list_.id, ))
 
     #def test_home_page_only_saves_items_when_necessary(self):
     #    request = HttpRequest()
@@ -140,7 +139,7 @@ class ListViewTest(TestCase):
 class NewListTest(TestCase):
     def test_saving_a_POST_request(self):
         self.client.post(
-                    '/lists/new',
+                    '/lists/new/',
                     data={'item_text': 'A new list item'}
                 )
         self.assertEqual(Item.objects.count(), 1)
@@ -149,7 +148,7 @@ class NewListTest(TestCase):
 
     def test_redirects_after_POST(self):
         response = self.client.post(
-                    '/lists/new',
+                    '/lists/new/',
                     data = {'item_text': 'A new list item'}
                 )
         #self.assertEqual(response.status_code, 302)
@@ -162,7 +161,7 @@ class NewListTest(TestCase):
         correct_list = List.objects.create()
 
         self.client.post(
-                    '/lists/%d/add_item' % (correct_list.id),
+                    '/lists/%d/add_item/' % (correct_list.id),
                     data={'item_text': 'A new item for an existing list'}
                 )
         self.assertEqual(Item.objects.count(), 1)
@@ -175,7 +174,7 @@ class NewListTest(TestCase):
         correct_list = List.objects.create()
 
         response = self.client.post(
-                    '/lists/%d/add_item' % (correct_list.id, ),
+                    '/lists/%d/add_item/' % (correct_list.id, ),
                     data={'item_text': 'A new item for existing list'}
                 )
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id, ))
