@@ -94,7 +94,7 @@ class ListAndItemModelTest(TestCase):
         self.assertEqual(second_saved_item.text, 'Item the second')
         self.assertEqual(second_saved_item.list, list_)
 
-
+# Test for the lists app, mostly the view test
 class ListViewTest(TestCase):
     def test_uses_list_template(self):
         list_ = List.objects.create()
