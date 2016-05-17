@@ -58,7 +58,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table("2: Use peacock feathers to make a fly")
         import time
-        time.sleep(10)
+        time.sleep(30)
         #table = self.browser.find_element_by_id('id_list_table')
         #rows = table.find_elements_by_tag_name('tr')
         #self.assertIn("2: Use peacock feathers to make a fly", [row.text for row in rows])
