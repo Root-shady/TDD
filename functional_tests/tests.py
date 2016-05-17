@@ -9,6 +9,7 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 import unittest
+import time
 from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(LiveServerTestCase):
@@ -60,8 +61,6 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table("2: Use peacock feathers to make a fly")
-        import time
-        time.sleep(10)
         #table = self.browser.find_element_by_id('id_list_table')
         #rows = table.find_elements_by_tag_name('tr')
         #self.assertIn("2: Use peacock feathers to make a fly", [row.text for row in rows])
@@ -72,7 +71,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser = webdriver.Firefox()
 
         # Francis visits the home page, there is no sign of Edith's list
-        self.browser.get(sel.live_server_url)
+        self.browser.get(self.live_server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('Make a fly', page_text)
@@ -80,6 +79,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(5)
 
         # Francis gets his own unique URL
         Francis_list_url = self.browser.current_url
