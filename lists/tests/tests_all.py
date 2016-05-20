@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from django.http import HttpRequest
 from django.template.loader import render_to_string
-from .views import home_page
-from .models import Item, List
+from lists.views import home_page
+from lists.models import Item, List
 
 
 # Create your tests here.
@@ -178,6 +178,4 @@ class NewListTest(TestCase):
                     data={'item_text': 'A new item for existing list'}
                 )
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id, ))
-
-
 
