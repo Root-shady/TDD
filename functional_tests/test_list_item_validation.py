@@ -1,0 +1,11 @@
+#from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+import unittest
+from unittest import skip
+from .base import FunctionalTest
+
+class ItemValidationTest(FunctionalTest): 
+    @skip
+    def test_cannot_add_empty_list_items(self):
+        pass
+
